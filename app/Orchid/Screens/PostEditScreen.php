@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -90,6 +91,7 @@ class PostEditScreen extends Screen
             Layout::rows([
                 Input::make('post.title')
                     ->title('Title')
+                    ->required()->maxLength(255)
                     ->placeholder('Attractive but mysterious title')
                     ->help('Specify a short descriptive title for this post.'),
 
@@ -101,16 +103,19 @@ class PostEditScreen extends Screen
 
                 TextArea::make('post.description')
                     ->title('Description')
+                    ->required()->maxLength(255)
                     ->rows(3)
                     ->maxlength(200)
                     ->placeholder('Brief description for preview'),
 
                 Relation::make('post.author')
                     ->title('Author')
+                    ->required()
                     ->fromModel(User::class, 'name'),
 
                 Quill::make('post.body')
-                    ->title('Main text'),
+                    ->title('Main text')
+                    ->required(),
 
                 Upload::make('post.attachments')
                     ->title('All files')
@@ -123,15 +128,8 @@ class PostEditScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createOrUpdate(Request $request)
+    public function createOrUpdate(PostRequest $request)
     {
-        $request->validate([
-            'post.title' => 'required|max:255',
-            'post.description' => 'required|max:255',
-            'post.author' => 'required',
-            'post.body' => 'required|min:1',
-        ]);
-
         $this->post->attachments()->syncWithoutDetaching(
             $request->input('post.attachments', [])
         );
