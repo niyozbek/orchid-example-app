@@ -14,6 +14,7 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\StateScreen;
 use App\Orchid\Screens\TaskScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
@@ -107,4 +108,9 @@ Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.exam
 Route::screen('task', TaskScreen::class)->name('platform.task')
     ->breadcrumbs(function (Trail $trail){
         return $trail->parent('platform.index')->push('Task');
+    });
+
+Route::screen('state', StateScreen::class)->name('platform.state')
+    ->breadcrumbs(function (Trail $trail){
+        return $trail->parent('platform.index')->push('State');
     });
