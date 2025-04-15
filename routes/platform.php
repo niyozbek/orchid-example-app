@@ -12,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\PostEditScreen;
+use App\Orchid\Screens\PostListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\StateScreen;
@@ -113,4 +115,16 @@ Route::screen('task', TaskScreen::class)->name('platform.task')
 Route::screen('state', StateScreen::class)->name('platform.state')
     ->breadcrumbs(function (Trail $trail){
         return $trail->parent('platform.index')->push('State');
+    });
+
+Route::screen('post/{post?}', PostEditScreen::class)
+    ->name('platform.post.edit')
+    ->breadcrumbs(function (Trail $trail){
+        return $trail->parent('platform.index')->push('Post Edit');
+    });
+
+Route::screen('posts', PostListScreen::class)
+    ->name('platform.post.list')
+    ->breadcrumbs(function (Trail $trail){
+        return $trail->parent('platform.index')->push('Post List');
     });
